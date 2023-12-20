@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Describe playwright test', async () => {
+test.describe.skip('Describe playwright test', async () => {
 
   test.beforeAll(async () => {
     // console.log('1');

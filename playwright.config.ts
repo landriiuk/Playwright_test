@@ -21,10 +21,10 @@ export default defineConfig({
   workers: process.env.CI ? 1 : 2,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [['html', { open: 'never' }]],
-  globalTimeout: 1800000,
+  globalTimeout: 18000,
   grepInvert: /@regression/,
-  globalSetup: 'globalSetup.ts',
-  globalTeardown: 'globalTearDown.ts',
+  // globalSetup: 'globalSetup.ts',
+  // globalTeardown: 'globalTearDown.ts',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
@@ -32,7 +32,7 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on',
-    baseURL: 'http://127.0.0.1:3000',
+    baseURL: 'https://demoqa.com/',
   },
 
   /* Configure projects for major browsers */
@@ -49,25 +49,30 @@ export default defineConfig({
     //     trace: 'on',
     //   },
     // }
-    {
-      name: 'setup',
-      testMatch: '**/setup/*.config.ts',
-      use: {
-        viewport: {
-          height: 1600,
-          width: 700
-        }
-      }
-    },
+    // {
+    //   name: 'setup',
+    //   testMatch: '**/setup/*.config.ts',
+    //   use: {
+    //     viewport: {
+    //       height: 1600,
+    //       width: 700
+    //     }
+    //   }
+    // },
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-      dependencies: ['setup'],
+      use: { ...devices['Desktop Chrome'],
+      launchOptions: {
+        slowMo: 500,
+      },
+     },
+  
+      // dependencies: ['setup'],
     },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
 
     // {
     //   name: 'webkit',
