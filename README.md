@@ -1,11 +1,15 @@
 # Playwright_test
 
-Inside that directory, you can run several commands:
+# Inside that directory, you can run several commands:
+## 'test'
+### 'test2
+#### 'test3'
 
-  npx playwright test
+  `npx playwright test`
+
     Runs the end-to-end tests.
 
-  npx playwright test --ui
+  `npx playwright test --ui`
     Starts the interactive UI mode.
 
   npx playwright test --project=chromium
