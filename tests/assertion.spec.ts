@@ -1,6 +1,6 @@
 import { Locator, expect, test } from 'playwright/test';
 
-test.describe.only(async () => {
+test.describe.skip(async () => {
 
     test('All() + for of', async ({ page }) => {
         expect(1).toBe(1);

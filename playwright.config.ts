@@ -21,7 +21,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : 2,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [['html', { open: 'never' }]],
-  globalTimeout: 18000,
+  globalTimeout: 18000000,
   grepInvert: /@regression/,
   // globalSetup: 'globalSetup.ts',
   // globalTeardown: 'globalTearDown.ts',

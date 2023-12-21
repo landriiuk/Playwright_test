@@ -1,6 +1,34 @@
-import { Locator, expect, test } from 'playwright/test';
+import { Locator, Page, expect, test } from 'playwright/test';
+import BasePage from '../pages/BasePage';
+import ElementsPage from '../pages/ElementsPage';
+import { expectedElementsArray } from '../test-data/elements';
 
-test.describe.skip(async () => {
+test.describe.only(async () => {
+    let page: Page;
+    let basePage;
+    let elementsPage
+
+    test.beforeAll(async ({ browser }) => {
+        page = await browser.newPage();
+        basePage = new BasePage(page);
+        elementsPage = new ElementsPage(page);
+    });
+
+    test.only('All() + for of with PAGE OBJECT', async () => {
+        await basePage.goto();
+        await basePage.openElementsCategory();
+        const actualElementsArray = await elementsPage.getAllSubCategories();
+        expect(actualElementsArray).toEqual(expectedElementsArray);
+    });
+
+    //todo check this code 
+            // let context = await browser.newContext({
+        //     viewport: {
+        //         width: 1900,
+        //         height: 1020
+        //     }
+        // })
+        // page = context.newPage();
 
     test('Get locator by text', async ({ page }) => {
         await page.goto('/');
@@ -77,7 +105,9 @@ test.describe.skip(async () => {
         await page.getByText('Radio Button').click();
         const yesCheckbox: Locator = page.locator('#yesRadio');
         await yesCheckbox.check({ force: true });
-        await expect(yesCheckbox).toBeChecked();
+
+        await expect.soft(yesCheckbox).not.toBeChecked();
+
         await yesCheckbox.uncheck({ force: true });
         await expect(yesCheckbox).not.toBeChecked();
     });

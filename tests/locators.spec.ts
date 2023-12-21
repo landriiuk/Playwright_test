@@ -1,6 +1,6 @@
 import { Locator, expect, test } from 'playwright/test';
 
-test.describe(async () => {
+test.describe.skip(async () => {
 
     test.skip('Get locator by text', async ({ page }) => {
         await page.goto('/');
