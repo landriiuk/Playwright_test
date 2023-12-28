@@ -2,11 +2,11 @@ import { Locator, Page, expect, test } from 'playwright/test';
 import BasePage from '../pages/BasePage';
 import ElementsPage from '../pages/ElementsPage';
 import { expectedElementsArray } from '../test-data/elements';
-
 test.describe.only(async () => {
     let page: Page;
     let basePage;
     let elementsPage
+    const userName = process.env.USERNAME;
 
     test.beforeAll(async ({ browser }) => {
         page = await browser.newPage();
@@ -14,8 +14,9 @@ test.describe.only(async () => {
         elementsPage = new ElementsPage(page);
     });
 
-    test.only('All() + for of with PAGE OBJECT', async () => {
+    test.only('All() + for of with PAGE OBJECT @smoke', async () => {
         await basePage.goto();
+        console.log('______________________________________________',userName);
         await basePage.openElementsCategory();
         const actualElementsArray = await elementsPage.getAllSubCategories();
         expect(actualElementsArray).toEqual(expectedElementsArray);
@@ -30,7 +31,7 @@ test.describe.only(async () => {
         // })
         // page = context.newPage();
 
-    test('Get locator by text', async ({ page }) => {
+    test.only('Get locator by text', async ({ page }) => {
         await page.goto('/');
 
     });
@@ -113,13 +114,14 @@ test.describe.only(async () => {
     });
 
 
-    test('Fill, type, ', async ({ page }) => {
-        await page.goto('/', { waitUntil: 'domcontentloaded' });
+    test.only('Fill, type, ', async ({ page }) => {
+        await page.goto('/automation-practice-form', { waitUntil: 'domcontentloaded' });
 
-        const input: Locator = page.locator('input')
+        const input: Locator = page.locator('#firstName')
         await input.fill('some text');
-        await input.type('some text');
+        // await input.type('some text');
         await input.pressSequentially('some text', { delay: 500 });
+        expect(input).not.toBeVisible();
     });
 
 

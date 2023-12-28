@@ -1,4 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
+import { config } from './config/config';
+// import dotenv from 'dotenv';
+// dotenv.config();
 
 /**
  * Read environment variables from file.
@@ -20,7 +23,12 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : 2,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [['html', { open: 'never' }]],
+  reporter: [
+    ['html', { outputFolder: 'my-results', open: 'never' }],
+    ['blob'],
+    ['list', { printSteps: true, outputFolder: '' }],
+    ['dot']
+  ],
   globalTimeout: 18000000,
   grepInvert: /@regression/,
   // globalSetup: 'globalSetup.ts',
@@ -32,7 +40,7 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on',
-    baseURL: 'https://demoqa.com/',
+    baseURL: config.baseUrl,
   },
 
   /* Configure projects for major browsers */
@@ -61,12 +69,13 @@ export default defineConfig({
     // },
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'],
-      launchOptions: {
-        slowMo: 500,
+      use: {
+        ...devices['Desktop Chrome'],
+        launchOptions: {
+          slowMo: 500,
+        },
       },
-     },
-  
+
       // dependencies: ['setup'],
     },
     // {
