@@ -9,10 +9,10 @@ export class PageManager {
     readonly basePage: BasePage;
     readonly elementsPage: ElementsPage;
 
-    constructor(page: Page) {
+    constructor(page: Page,) {
         this.page = page;
         this.loginPage = new LoginPage(this.page);
-        this.basePage = new BasePage(this.page);
+        this.basePage = new BasePage(this.page, '/');
         this.elementsPage = new ElementsPage(this.page);
     }
 
@@ -20,7 +20,7 @@ export class PageManager {
         return this.basePage;
     }
 
-    async login(){
+    async login() {
         return this.loginPage;
     }
     // async createUser(credentials: ICredentials) {

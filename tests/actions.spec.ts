@@ -1,44 +1,28 @@
-import { Locator, Page, expect, test } from 'playwright/test';
+import { Locator, Page, expect } from 'playwright/test';
 import BasePage from '../pages/BasePage';
 import ElementsPage from '../pages/ElementsPage';
-import { expectedElementsArray } from '../test-data/elements';
-test.describe.only(async () => {
+import { test } from '../src/fixtures/base_fixture';
+
+test.describe(async () => {
     let page: Page;
-    let basePage;
-    let elementsPage
+    let basePage: BasePage;
+    let elementsPage: ElementsPage;
     const userName = process.env.USERNAME;
 
     test.beforeAll(async ({ browser }) => {
         page = await browser.newPage();
-        basePage = new BasePage(page);
+        basePage = new BasePage(page, '/');
         elementsPage = new ElementsPage(page);
     });
 
-    test.only('All() + for of with PAGE OBJECT @smoke', async () => {
-        await basePage.goto();
-        console.log('______________________________________________',userName);
-        await basePage.openElementsCategory();
+    test.only('All() + for of with PAGE OBJECT @smoke', async ({elementsArray}) => {
+   
+        await elementsPage.navigateTo();
+        // await basePage.openElementsCategory();
         const actualElementsArray = await elementsPage.getAllSubCategories();
-        expect(actualElementsArray).toEqual(expectedElementsArray);
+        console.log(elementsArray);
+        expect(actualElementsArray).toEqual(elementsArray);
     });
-
-    //todo check this code 
-            // let context = await browser.newContext({
-        //     viewport: {
-        //         width: 1900,
-        //         height: 1020
-        //     }
-        // })
-        // page = context.newPage();
-
-    test.only('Get locator by text', async ({ page }) => {
-        await page.goto('/');
-
-    });
-
-    // test('Get locator by locator + filter', async ({ page }) => {
-
-    // });
 
     test('Count + verify array text', async ({ page }) => {
         await page.goto('/', { waitUntil: 'domcontentloaded' });
@@ -114,7 +98,7 @@ test.describe.only(async () => {
     });
 
 
-    test.only('Fill, type, ', async ({ page }) => {
+    test('Fill, type, ', async ({ page }) => {
         await page.goto('/automation-practice-form', { waitUntil: 'domcontentloaded' });
 
         const input: Locator = page.locator('#firstName')

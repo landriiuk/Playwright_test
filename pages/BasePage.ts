@@ -3,12 +3,16 @@ import { Locator, Page } from 'playwright';
 export default class BasePage {
     readonly page: Page;
     readonly elementsCategory: Locator;
-    // readonly url: Locator;
+    readonly url: string;
 
-    constructor(page: Page,) {
+    constructor(page: Page, url:string) {
         this.page = page;
         this.elementsCategory = this.page.locator('.card-body', { has: page.getByText('Elements') });
-        // this.url = url
+         this.url = url
+    }
+
+    async navigateTo(){
+        await this.page.goto(this.url);
     }
 
     async openElementsCategory(): Promise<void> {

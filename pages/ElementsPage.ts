@@ -8,7 +8,7 @@ export default class ElementsPage extends BasePage {
 
     constructor(page: Page,) {
         // const url2 = url ?? page.goto('/elements');
-        super(page);
+        super(page, '/elements');
         this.page = page;
         this.elementsSubCategories = this.page.locator('.collapse.show .text');
     }

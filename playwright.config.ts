@@ -1,5 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 import { config } from './config/config';
+import { storageStatePath } from './src/links/path';
 // import dotenv from 'dotenv';
 // dotenv.config();
 
@@ -24,12 +25,13 @@ export default defineConfig({
   workers: process.env.CI ? 1 : 2,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
-    ['html', { outputFolder: 'my-results', open: 'never' }],
+    ['html', { outputFolder: 'my-results', open: 'always' }],
     ['blob'],
     ['list', { printSteps: true, outputFolder: '' }],
     ['dot']
   ],
   globalTimeout: 18000000,
+  timeout: 10000,
   grepInvert: /@regression/,
   // globalSetup: 'globalSetup.ts',
   // globalTeardown: 'globalTearDown.ts',
@@ -41,6 +43,7 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on',
     baseURL: config.baseUrl,
+    // storageState:storageStatePath,
   },
 
   /* Configure projects for major browsers */
@@ -57,26 +60,25 @@ export default defineConfig({
     //     trace: 'on',
     //   },
     // }
-    // {
-    //   name: 'setup',
-    //   testMatch: '**/setup/*.config.ts',
-    //   use: {
-    //     viewport: {
-    //       height: 1600,
-    //       width: 700
-    //     }
-    //   }
-    // },
+    {
+      name: 'setup',
+      testMatch: '**/setup/*.config.ts',
+      use: {
+        viewport: {
+          height: 1600,
+          width: 700
+        }
+      }
+    },
     {
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
         launchOptions: {
-          slowMo: 500,
+          slowMo: 50,
         },
       },
-
-      // dependencies: ['setup'],
+      dependencies: ['setup'],
     },
     // {
     //   name: 'firefox',
