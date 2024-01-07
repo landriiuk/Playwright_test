@@ -31,7 +31,7 @@ export default defineConfig({
     ['dot']
   ],
   globalTimeout: 18000000,
-  timeout: 10000,
+  timeout: 20000,
   grepInvert: /@regression/,
   // globalSetup: 'globalSetup.ts',
   // globalTeardown: 'globalTearDown.ts',

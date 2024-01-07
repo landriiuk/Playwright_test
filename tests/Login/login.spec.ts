@@ -21,6 +21,7 @@ test.describe(async () => {
         let pm = new PageManager(page);
         (await pm.navigatePage()).goto('register');
         await (await pm.login()).createUser(userCred);
+        await page.waitForLoadState();
     })
 });
 

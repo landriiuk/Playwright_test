@@ -2,6 +2,7 @@ import { Locator, Page } from 'playwright';
 import { LoginPage } from './LoginPage';
 import BasePage from './BasePage';
 import ElementsPage from './ElementsPage';
+import { expect } from '@playwright/test';
 
 export class PageManager {
     readonly page: Page;
@@ -14,6 +15,13 @@ export class PageManager {
         this.loginPage = new LoginPage(this.page);
         this.basePage = new BasePage(this.page, '/');
         this.elementsPage = new ElementsPage(this.page);
+    }
+
+    async verifyButtonVisible(page: Page) {
+        // await newPage.waitForLoadState();
+        await page.waitForLoadState();
+        await expect(page.locator('.navbar__tutorial-menu--text')).toBeVisible();
+        await page.close();
     }
 
     async navigatePage(): Promise<BasePage> {
